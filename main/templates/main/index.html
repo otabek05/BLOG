@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% include 'components/_nav.html' %}
+<main class="d-flex flex-column align-items-center justify-content-start w-100 h-100">
+    <form action="{% url 'home' %}" method="post" class="d-flex flex-row align-items-center w-50 mt-5">
+        {% csrf_token %}
+        <input class="form-control bg-dark w-75 mx-1 text-light" type="text" name="todo"
+            placeholder="Read Django Documentation ..." autocomplete="off" required>
+        <button class="btn btn-outline-light d-block w-25 mx-1" type="submit">Create Task</button>
+    </form>
+    <ul class="text-light w-50 d-block list-style-none p-0 mt-3">
+        {% for task in tasks %}
+        <li
+            class="border border-1 border-light border-top-0 border-start-0 border-end-0 border-opacity-25 p-2 w-100 d-flex flex-row align-items-center justify-content-between">
+            {{ task.body }}
+            <div class="d-flex flex-row align-items-center">
+                {% if task.completed %}
+                <span class="text-success text-decoration-none">
+                    <i class="bi bi-check2-all" style="font-size: 20px; margin-right: 20px;"></i>
+                </span>
+                {% else %}
+                <a class="btn btn-outline-success mx-1" href="{% url 'complete' pk=task.id %}">
+                    <i class="bi bi-check2-circle"></i>
+                    Done
+                </a>
+                {% endif %}
+                <a class="btn btn-outline-danger mx-1" href="{% url 'delete' pk=task.id %}">
+                    <i class="bi bi-trash"></i>
+                    Delete
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+
+{% endblock content %}

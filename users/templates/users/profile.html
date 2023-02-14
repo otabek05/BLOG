@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'components/_nav.html' %}
+<main class="container d-flex align-items-start mt-5 justify-content-start h-100">
+    <table class="table table-dark table-striped w-50">
+        <tbody>
+            <tr>
+                <td>First Name: </td>
+                {% if not profile.first_name %}
+                <td id="first_name" contenteditable>-</td>
+                {% else %}
+                <td id="first_name" contenteditable>{{ profile.first_name }}</td>
+                {% endif %}
+                <td><button id="save_btn" class="btn btn-outline-info w-100 d-block" data-profile="{{ profile.id }}"
+                        data-target="first_name" data-field="first_name">Save</button></td>
+            </tr>
+            <tr>
+                <td>Last Name: </td>
+                {% if not profile.first_name %}
+                <td id="last_name" contenteditable="">-</td>
+                {% else %}
+                <td id="last_name" contenteditable>{{ profile.last_name }}</td>
+                {% endif %}
+                <td>
+                    <button id="save_btn" class="btn btn-outline-info w-100 d-block" data-profile="{{ profile.id }}"
+                        data-field="last_name" data-target="last_name">
+                        Save
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>Username: </td>
+                <td id="username" contenteditable>{{ profile.username }}</td>
+                <td>
+                    <button id="save_btn" class="btn btn-outline-info w-100 d-block" data-profile="{{ profile.id }}"
+                        data-target="username" data-field="username">Save</button>
+                </td>
+            </tr>
+            <tr>
+                <td>E-mail: </td>
+                {% if not profile.email %}
+                <td id="email" contenteditable>-</td>
+                {% else %}
+                <td id="email" contenteditable>{{ profile.email }}</td>
+                {% endif %}
+                <td>
+                    <button id="save_btn" class="btn btn-outline-info w-100 d-block" data-profile="{{ profile.id }}"
+                        data-target="email" data-field="email">Save</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="" method="post" id="profile-form">
+        {% csrf_token %}
+    </form>
+
+</main>
+
+<script>
+    const btns = document.querySelectorAll('#save_btn');
+    const profileForm = document.getElementById('profile-form');
+
+    btns.forEach((btn, index) => {
+        btn.addEventListener('click', (e) => {
+            const first_name = document.getElementById('first_name'),
+                last_name = document.getElementById('last_name'),
+                username = document.getElementById('username'),
+                email = document.getElementById('email');
+
+            if (email.textContent.trim().includes('@')) {
+                profileForm.innerHTML += `
+                <input name="first_name" value="${first_name.textContent}" type="hidden"></input>
+                <input name="last_name" value="${last_name.textContent}" type="hidden"></input>
+                <input name="email" value="${email.textContent}" type="hidden"></input>
+                <input name="username" value="${username.textContent}" type="hidden"></input>
+            `
+                profileForm.submit()
+
+            } else {
+                alert('E-mail field is filled incorrectly')
+                window.location.reload()
+            }
+
+
+        });
+    })
+
+</script>
+
+{% endblock content %}

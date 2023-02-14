@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container d-flex align-items-center justify-content-center h-100">
+    <form action="{% url 'login' %}" method="post" class="d-flex flex-column w-25">
+        {% csrf_token %}
+        <div class="m-1 p-0">
+            <label for="username" class="text-light">Username: </label>
+            <input id="username" name="username" type="text" class="form-control bg-dark text-light"
+                placeholder="username">
+        </div>
+        <div class="m-1 p-0">
+            <label for="password" class="text-light">Password: </label>
+            <input id="password" name="password" type="password" class="form-control bg-dark text-light"
+                placeholder="********">
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Sign In</button>
+        <small class="text-light d-block text-center mt-2">Don't have an account ?
+            <a href="{% url 'register' %}" class="text-decoration-none">Sign Up</a>
+        </small>
+    </form>
+</main>
+
+{% endblock content %}
