@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'https://blog-production-cf65.up.railway.app/']
 CSRF_TRUSTED_ORIGINS = [
-    'https://blog-production-cf65.up.railway.app/'
+    'https://blog-production-cf65.up.railway.app/',
+    'https://blog-production-2446.up.railway.app/'
 ]
 
 
