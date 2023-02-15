@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 
 from .forms import UserRegisterForm, UserUpdateForm
 
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
 def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -19,7 +23,7 @@ def user_register(request):
     }
     return render(request, 'users/register.html', context)
 
-
+@csrf_exempt
 def user_login(request):   
     if request.user.is_authenticated:
         return redirect('home')
@@ -45,6 +49,7 @@ def user_logout(request):
 
 
 @login_required(login_url='login')
+@csrf_exempt
 def user_profile(request):
     user = User.objects.get(id=request.user.id)
     if request.method == 'POST':
